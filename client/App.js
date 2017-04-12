@@ -17,6 +17,8 @@ import {
 import FirebaseAPI from './include/firebaseAPI'
 var firebaseAPI = new FirebaseAPI()
 
+import EListView from './components/EListView'
+
 //
 // var View2       = React.createFactory(React.View)
 // var ScrollView2 = React.createFactory(React.ScrollView)
@@ -36,24 +38,24 @@ var firebaseAPI = new FirebaseAPI()
 //   }
 // })
 
-class EList extends Component {
-  constructor () {
-    super()
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
-    this.state = {
-      dataSource: ds.cloneWithRows(['row 1', 'row 2'])
-    }
-  }
-
-  render () {
-    return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={(rowData) => <Text>{rowData}</Text>}
-      />
-    )
-  }
-}
+// class EList extends Component {
+//   constructor () {
+//     super()
+//     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+//     this.state = {
+//       dataSource: ds.cloneWithRows(['row 1', 'row 2'])
+//     }
+//   }
+//
+//   render () {
+//     return (
+//       <ListView
+//         dataSource={this.state.dataSource}
+//         renderRow={(rowData) => <Text>{rowData}</Text>}
+//       />
+//     )
+//   }
+// }
 
 export default class evolutionR extends Component {
 
@@ -67,24 +69,24 @@ export default class evolutionR extends Component {
     }
   }
 
-  _onPressOut (type) {
+  _onPress (type) {
     let temp
     if (type === 'text') {
       temp = <Text>{ Date.now().toString() }</Text>
     } else if (type === 'button') {
       temp = <Button
         title={Date.now().toString()}
-        onPress={() => this._onPressOut('text')} />
-     }
+        onPress={() => this._onPress('text')} />
+    } else if (type === 'list') {
+      temp = <EListView datasource='trees' />
+    }
 
-   this.state.myArr.push(temp)
-   this.setState({
-       myArr: this.state.myArr
-   })
-   console.log('myArr', this.state.myArr)
+    this.state.myArr.push(temp)
+    this.setState({
+      myArr: this.state.myArr
+    })
+    console.log('myArr', this.state.myArr)
   }
-
-
 
   render () {
     let Arr = this.state.myArr.map((val, i) => {
@@ -94,27 +96,27 @@ export default class evolutionR extends Component {
     return (
       <View style={styles.container}>
         { Arr }
+        <EListView datasource='trees' />
         <Button
-        onPress={() => this._onPressOut('text')}
-        title='ADD' />
+          onPress={() => this._onPress('text')}
+          title='add text' />
         <Button
-        onPress={() => this._onPressOut('button')}
-        title='Button' />
-        <EList />
+          onPress={() => this._onPress('button')}
+          title='add button' />
+        <Button
+          onPress={() => this._onPress('list')}
+          title='add list' />
       </View>
     )
   }
 }
-
-
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#F5FCFF'
   }
 })
 

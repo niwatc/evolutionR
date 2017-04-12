@@ -15,6 +15,8 @@ class FirebaseFunctions {
       this.observers = []
       this.storage = firebase.storage()
       this.storageRef = this.storage.ref('images')
+
+      this.dataSources = {}
     }
     return instance
   }
@@ -28,24 +30,24 @@ class FirebaseFunctions {
   }
 
   listenForData () {
-      this.getRefData().on('value', (snapshot) => {
-          console.log('listenForData', snapshot.val())
-          // let data = []
-          // snap.forEach((child) => {
-          //     this.tripsCache.push({
-          //       title: child.val().title,
-          //       googleData: child.val().googleData,
-          //       image: child.val().image,
-          //       city: child.val().city,
-          //       locations:child.val().locations,
-          //       userData: child.val().userData,
-          //       nbLocationsPerTrip: this.nbLocationsPerTrip(child.val()),
-          //       isMyTrip: this.isMyTrip(child.val()),
-          //       key: child.key,
-          //     })
-          // })
-          // this.notifyObservers("trips_changed", null)
-      })
+    this.getRefData().on('value', (snapshot) => {
+      console.log('listenForData', snapshot.val())
+      this.dataSources = snapshot.val()
+      // snap.forEach((child) => {
+      //     this.tripsCache.push({
+      //       title: child.val().title,
+      //       googleData: child.val().googleData,
+      //       image: child.val().image,
+      //       city: child.val().city,
+      //       locations:child.val().locations,
+      //       userData: child.val().userData,
+      //       nbLocationsPerTrip: this.nbLocationsPerTrip(child.val()),
+      //       isMyTrip: this.isMyTrip(child.val()),
+      //       key: child.key,
+      //     })
+      // })
+      this.notifyObservers("datasources_updated", null)
+    })
   }
 
   addObserver (topic, observer) {
