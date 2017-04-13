@@ -1,7 +1,16 @@
-import React, {Component} from 'react'
-import ReactNative from 'react-native'
 import * as firebase from 'firebase'
-import Firebase from './firebase'
+
+// Initialize Firebase
+const firebaseConfig = {
+  apiKey: 'AIzaSyA-S8iI7eiEFgChxXlMEYi7LcAzO94sVI8',
+  authDomain: 'graphdb-f8314.firebaseapp.com',
+  databaseURL: 'https://graphdb-f8314.firebaseio.com',
+  projectId: 'graphdb-f8314',
+  storageBucket: 'graphdb-f8314.appspot.com',
+  messagingSenderId: '149737911600'
+}
+
+firebase.initializeApp(firebaseConfig)
 
 let instance = null
 
@@ -50,6 +59,17 @@ class FirebaseFunctions {
     })
   }
 
+  // listenForEdges
+
+  // listenForNodes
+
+  // getComponents()
+
+  // getStyle()
+
+  // getEvents()
+
+  // Observer pattern
   addObserver (topic, observer) {
     this.observers[topic] || (this.observers[topic] = [])
     this.observers[topic].push(observer)
